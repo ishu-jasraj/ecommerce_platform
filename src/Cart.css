@@ -1,0 +1,81 @@
+/* Cart.css */
+
+.cart-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background: #f9f9f9;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center; /* Aligns items vertically */
+    justify-content: space-between; /* Spreads out items */
+}
+
+/* Styling for quantity controls */
+.qty-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Spacing between buttons and quantity */
+}
+
+.qty-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.qty-btn:hover {
+    background: #0056b3;
+}
+
+.qty-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.qty-value {
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 30px;
+    text-align: center;
+}
+
+/* Styling for the checkout button */
+.checkout-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.checkout-btn:hover {
+    background: #1e7e34;
+}

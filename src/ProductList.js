@@ -9,7 +9,7 @@ const products = [
     {id: 5, name: 'Charger', price: 500},
 ];
 
-const ProductList = () => {
+const ProductList = ({ addProductToCart }) => {
     return (
         <div>
             <h2>Product List</h2>
@@ -19,7 +19,11 @@ const ProductList = () => {
                         <span className="product-item">
                             <span>{product.name} - ₹{product.price}</span>
                             <span>
-                                <button className="add-to-cart">Add To Cart</button>
+                                <button 
+                                className="add-to-cart"
+                                onClick={()=>addProductToCart(product)}
+                                >Add To Cart
+                                </button>
                                 <button className="buy-now">Buy Now</button>
                             </span>
                         </span>
