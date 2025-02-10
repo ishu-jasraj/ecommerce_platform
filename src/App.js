@@ -5,6 +5,13 @@ import NavBar from './NavBar';
 import ProductList from './ProductList';
 import Cart from './Cart';
 
+const products = [
+  { id: 1, name: "Laptop", originalPrice: 80000, price: 75000, img: "https://via.placeholder.com/60" },
+  { id: 2, name: "Smartphone", originalPrice: 35000, price: 30000, img: "https://via.placeholder.com/60" },
+  { id: 3, name: "Headphones", originalPrice: 7000, price: 5000, img: "https://via.placeholder.com/60" },
+  { id: 4, name: "Smart Watch", originalPrice: 20000, price: 15000, img: "https://via.placeholder.com/60" },
+];
+
 function App() {
   const [cart, setCart] = useState([]);
 
@@ -32,8 +39,8 @@ function App() {
     <Router>
         <NavBar/>
         <Routes>
-            <Route path='/' element={<ProductList addProductToCart={addProductToCart}/>}></Route>
-            <Route path='/cart' element={<Cart cart={cart} updateCart={updateCart}/>}></Route>
+            <Route path='/' element={<ProductList addProductToCart={addProductToCart} products={products} />}></Route>
+            <Route path='/cart' element={<Cart products={products} cart={cart} updateCart={updateCart} addProductToCart={addProductToCart}/>}></Route>
         </Routes>
     </Router>
   );

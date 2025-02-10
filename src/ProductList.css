@@ -1,79 +1,129 @@
-/* Centering the container */
+/* Centering the product list container */
 .container {
-    max-width: 600px;
+    max-width: 800px;
     margin: 40px auto;
     padding: 20px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     text-align: center;
 }
 
 /* Heading */
 h2 {
-    color: #333;
-    font-size: 24px;
+    color: #222;
+    font-size: 26px;
     margin-bottom: 20px;
+    font-weight: bold;
 }
 
-/* Removing default padding and centering list */
+/* Remove default padding */
 ul {
     list-style-type: none;
     padding: 0;
 }
 
-/* Styling list items */
+/* Styling for each product card */
 li {
-    background: #f9f9f9;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     padding: 15px;
     margin: 10px 0;
-    border-radius: 8px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    transition: 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #ddd;
 }
 
-/* Hover effect */
+/* Hover effect: Add shadow and slight zoom */
 li:hover {
-    background: #f1f1f1;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Wrapping product details and buttons neatly */
+/* Aligning product name and price neatly */
 .product-item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: 100%;
+    gap: 15px;
+}
+
+/* Product image (if needed) */
+.product-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Product name and price text */
+.product-info {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Buttons container */
+.button-group {
+    display: flex;
+    gap: 10px;
 }
 
 /* Styling buttons */
 button {
-    padding: 8px 12px;
+    padding: 10px 14px;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
-    transition: 0.3s ease;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 /* "Add to Cart" button */
 .add-to-cart {
     background: #007bff;
     color: white;
-    margin-right: 10px;
+    font-weight: bold;
 }
 
 .add-to-cart:hover {
     background: #0056b3;
+    transform: scale(1.05);
 }
 
 /* "Buy Now" button */
 .buy-now {
     background: #28a745;
     color: white;
+    font-weight: bold;
 }
 
 .buy-now:hover {
     background: #1e7e34;
+    transform: scale(1.05);
+}
+
+/* Product Price Styling */
+.product-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff5722; /* Attractive orange color */
+    margin-left: 5px;
+}
+
+/* Discounted Price */
+.discount-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #28a745; /* Green for discounts */
+}
+
+/* Strike-through original price */
+.original-price {
+    font-size: 16px;
+    color: #888;
+    text-decoration: line-through;
+    margin-right: 10px;
 }

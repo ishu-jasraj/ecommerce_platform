@@ -121,3 +121,26 @@ li {
     background: #a71d2a;
 }
 
+/* Total Price Container */
+.total-price-container {
+    text-align: center;
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+}
+
+/* Total Price Styling */
+.total-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: black; /* Green for positive pricing */
+}
+
+/* Highlight expensive orders */
+.total-price.expensive {
+    color: #dc3545; /* Red if price is above 5000 */
+}
+

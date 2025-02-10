@@ -1,0 +1,52 @@
+/* Suggested Products Full-Width Section */
+.suggested-products {
+    width: 90%; /* Make it wider */
+    max-width: 1100px; /* Limit width for large screens */
+    margin: 40px auto; /* Center it on the page */
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Grid Layout */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Dynamic grid */
+    gap: 20px;
+    justify-content: center;
+    padding: 10px;
+}
+
+/* Individual Product Cards */
+.product-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Add to Cart Button */
+.add-to-cart {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.add-to-cart:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
