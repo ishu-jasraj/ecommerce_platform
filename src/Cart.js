@@ -1,7 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
+import Modal from 'react-modal';
 import "./Cart.css";
+import OrderDetails from "./OrderDetails";
+
+Modal.setAppElement("#root");
 
 const Cart = ({ cart, updateCart }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     return (
         <div className="cart-container">
             <h2>Your Shopping Cart</h2>
@@ -33,7 +38,19 @@ const Cart = ({ cart, updateCart }) => {
                     ))}
                 </ul>
             )}
-            {cart.length > 0 && <button className="checkout-btn">Proceed To Payment</button>}
+            {cart.length > 0 && <button 
+                                 className="checkout-btn"
+                                 onClick = {()=>setIsModalOpen(true)}
+                                >Place Order</button>}
+            <Modal
+              isOpen={isModalOpen}
+              onRequestClose={() => setIsModalOpen(false)}
+              className="modal"
+              overlayClassName="overlay"
+            >
+              <OrderDetails cart={cart} />
+              <button className="close-btn" onClick={() => setIsModalOpen(false)}>Close</button>
+            </Modal>
         </div>
     );
 };
