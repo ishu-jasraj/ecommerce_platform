@@ -24,7 +24,6 @@ const ProductList = ({ addProductToCart }) => {
                                 onClick={()=>addProductToCart(product)}
                                 >Add To Cart
                                 </button>
-                                <button className="buy-now">Buy Now</button>
                             </span>
                         </span>
                     </li>
