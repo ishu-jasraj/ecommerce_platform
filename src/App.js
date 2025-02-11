@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import './App.css';
 import NavBar from './NavBar';
 import ProductList from './ProductList';
-import Cart from './Cart';
+import Cart from ./Cart';
 
 const products = [
   { id: 1, name: "Laptop", originalPrice: 80000, price: 75000, img: "https://via.placeholder.com/60" },
