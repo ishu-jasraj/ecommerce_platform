@@ -1,16 +1,10 @@
 import {useState} from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import './App.css';
-import NavBar from './NavBar';
-import ProductList from './ProductList';
-import Cart from ./Cart';
-
-const products = [
-  { id: 1, name: "Laptop", originalPrice: 80000, price: 75000, img: "https://via.placeholder.com/60" },
-  { id: 2, name: "Smartphone", originalPrice: 35000, price: 30000, img: "https://via.placeholder.com/60" },
-  { id: 3, name: "Headphones", originalPrice: 7000, price: 5000, img: "https://via.placeholder.com/60" },
-  { id: 4, name: "Smart Watch", originalPrice: 20000, price: 15000, img: "https://via.placeholder.com/60" },
-];
+import NavBar from './components/NavBar/NavBar';
+import ProductList from './components/Products/ProductList';
+import Cart from './components/Cart/Cart';
+import { CartContext } from './store/cart-context';
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -28,21 +22,29 @@ function App() {
         setCart((prevCart)=>[...prevCart,product]);
        }
   }
-  const updateCart = (productId, quantity) => {
+  const updateProductInCart = (productId, quantity) => {
     setCart((prevCart) =>
       prevCart.map((item) =>
           item.id === productId ? { ...item, quantity: Math.max(0, Math.min(10, quantity)) } : item
       ).filter((item) => item.quantity > 0)
   );
   }
+  const cartContextVal = {
+    cart,
+    onAdd: addProductToCart,
+    onUpdate: updateProductInCart,
+  }
+
   return (
+    <CartContext.Provider value = {cartContextVal}>
     <Router>
         <NavBar/>
         <Routes>
-            <Route path='/' element={<ProductList addProductToCart={addProductToCart} products={products} />}></Route>
-            <Route path='/cart' element={<Cart products={products} cart={cart} updateCart={updateCart} addProductToCart={addProductToCart}/>}></Route>
+            <Route path='/' element={<ProductList/>}></Route>
+            <Route path='/cart' element={<Cart/>}></Route>
         </Routes>
     </Router>
+    </CartContext.Provider>
   );
 }
 

@@ -1,8 +1,12 @@
-import React from 'react';
-import "./SuggestedProducts.css"; // Import styles
+import React, {useContext} from 'react';
+import "./SuggestedProducts.css";
+import { DUMMY_PRODUCTS } from '../../../assets/dummy_products';
+import { CartContext } from '../../../store/cart-context';
 
-const SuggestedProductList = ({ cart, products, addProductToCart }) => {
-    const suggestedProducts = products.filter(
+
+const SuggestedProductList = () => {
+    const { cart, onAdd } = useContext(CartContext);
+    const suggestedProducts = DUMMY_PRODUCTS.filter(
         (product) => !cart.some((cartItem) => cartItem.id === product.id)
     );
 
@@ -16,7 +20,7 @@ const SuggestedProductList = ({ cart, products, addProductToCart }) => {
                             <div className="product-card" key={product.id}>
                                 <h3>{product.name}</h3>
                                 <p className="product-price">₹{product.price}</p>
-                                <button className="add-to-cart" onClick={() => addProductToCart(product)}>
+                                <button className="add-to-cart" onClick={() => onAdd(product)}>
                                     Add To Cart
                                 </button>
                             </div>

@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Modal from "react-modal";
 import "./Cart.css";
-import OrderDetails from "./OrderDetails";
-import SuggestedProductList from "./SuggestedProductList";
+import OrderDetails from "../Orders/OrderDetails";
+import SuggestedProductList from "./suggestedProducts/SuggestedProductList";
+import { CartContext } from "../../store/cart-context";
 
 Modal.setAppElement("#root");
 
-const Cart = ({ products, cart, updateCart, addProductToCart }) => {
+const Cart = () => {
+    const {cart, onUpdate} = useContext(CartContext);
     const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -25,7 +27,7 @@ const Cart = ({ products, cart, updateCart, addProductToCart }) => {
                                 <div className="qty-container">
                                     <button 
                                         className="qty-btn" 
-                                        onClick={() => updateCart(item.id, item.quantity - 1)} 
+                                        onClick={() => onUpdate(item.id, item.quantity - 1)} 
                                         disabled={item.quantity === 0}
                                     >
                                         -
@@ -33,7 +35,7 @@ const Cart = ({ products, cart, updateCart, addProductToCart }) => {
                                     <span className="qty-value">{item.quantity}</span>
                                     <button 
                                         className="qty-btn" 
-                                        onClick={() => updateCart(item.id, item.quantity + 1)} 
+                                        onClick={() => onUpdate(item.id, item.quantity + 1)} 
                                         disabled={item.quantity === 10}
                                     >
                                         +
@@ -73,12 +75,7 @@ const Cart = ({ products, cart, updateCart, addProductToCart }) => {
                 </Modal>
             </div>
 
-            {/* Suggested Products - Outside Cart Block */}
-            <SuggestedProductList 
-                cart={cart} 
-                products={products}
-                addProductToCart={addProductToCart}
-             />
+            <SuggestedProductList/>
         </>
     );
 };
