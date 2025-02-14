@@ -5,9 +5,25 @@ nav {
     background-color: #007bff;
     padding: 15px 20px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center; /* Keeps Products & Cart centered */
+    position: relative; /* Allows absolute positioning for right-aligned buttons */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Center: Products & Cart (adds spacing) */
+.nav-center {
+    display: flex;
+    gap: 10px; /* Adds 10px gap between Products and Cart */
+}
+
+/* Right side for Login, Signup & Username */
+.nav-right {
+    position: absolute;
+    right: 20px; /* Aligns to the rightmost side */
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 /* Style the buttons */
@@ -16,7 +32,6 @@ nav button {
     color: #007bff;
     border: 2px solid #007bff;
     padding: 10px 20px;
-    margin: 0 10px;
     font-size: 16px;
     font-weight: bold;
     border-radius: 5px;
@@ -34,4 +49,14 @@ nav button:hover {
 /* Active button effect */
 nav button:active {
     transform: scale(0.95);
+}
+
+/* Styled Username */
+.nav-username {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #0056b3;
+    padding: 10px 15px;
+    border-radius: 20px;
 }
