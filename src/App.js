@@ -5,13 +5,14 @@ import NavBar from './components/NavBar/NavBar';
 import ProductList from './components/Products/ProductList';
 import Cart from './components/Cart/Cart';
 import { CartContext } from './store/cart-context';
+import { UserAuthContext } from './store/user-auth-context';
 import UserAuth from './components/UserAuth/UserAuth';
 
 function App() {
   const [cart, setCart] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userName, setUserName] = useState();
-  const [userPassword, setUserPassword] = useState();
+  const [userName, setUserName] = useState("");
+  const [userPassword, setUserPassword] = useState("");
 
   const addProductToCart = (productDetail) => {
        const {id, name, price} = productDetail;
@@ -39,36 +40,28 @@ function App() {
     onUpdate: updateProductInCart,
   }
 
+  const userAuth = {
+    username: userName,
+    userpassword: userPassword,
+    isAuthenticated,
+    setUsername: setUserName,
+    setUserpassword: setUserPassword,
+    setIsAuthenticated,
+  }
+
   return (
+    <UserAuthContext.Provider value={userAuth}>
     <CartContext.Provider value = {cartContextVal}>
     <Router>
         <NavBar isAuthenticated={isAuthenticated} userName={userName} />
         <Routes>
             <Route path='/' element={<ProductList/>}></Route>
             <Route path='/cart' element={<Cart/>}></Route>
-            <Route 
-            path='/login' 
-            element={<UserAuth 
-              setIsAuthenticated={setIsAuthenticated}
-              userName = {userName}
-              setUserName={setUserName}
-              userPassword = {userPassword}
-              setUserPassword = {setUserPassword}
-              buttonName = {'Login'}
-            />}></Route>
-            <Route 
-            path='/signup' 
-            element={<UserAuth
-              setIsAuthenticated={setIsAuthenticated}
-              userName = {userName}
-              setUserName={setUserName}
-              userPassword = {userPassword}
-              setUserPassword = {setUserPassword}
-              buttonName={'Sign Up'}
-            />}></Route>
+            <Route path='/login' element={<UserAuth />}></Route>
         </Routes>
     </Router>
     </CartContext.Provider>
+    </UserAuthContext.Provider>
   );
 }
 

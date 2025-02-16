@@ -4,11 +4,13 @@ import "./Cart.css";
 import OrderDetails from "../Orders/OrderDetails";
 import SuggestedProductList from "./suggestedProducts/SuggestedProductList";
 import { CartContext } from "../../store/cart-context";
+import { UserAuthContext } from '../../store/user-auth-context';
 
 Modal.setAppElement("#root");
 
 const Cart = () => {
     const {cart, onUpdate} = useContext(CartContext);
+    const { isAuthenticated } = useContext(UserAuthContext);
     const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -65,13 +67,23 @@ const Cart = () => {
 
                 {/* Order Details Modal */}
                 <Modal
-                    isOpen={isModalOpen}
+                    isOpen={isModalOpen && isAuthenticated}
                     onRequestClose={() => setIsModalOpen(false)}
                     className="modal"
                     overlayClassName="overlay"
                 >
                     <OrderDetails totalPrice={totalPrice} />
                     <button className="close-btn" onClick={() => setIsModalOpen(false)}>Close</button>
+                </Modal>
+
+                <Modal
+                    isOpen = {!isAuthenticated && isModalOpen}
+                    onRequestClose={()=>{setIsModalOpen(false)}}
+                    className="modal"
+                    overlayClassName="overlay"
+                >
+                        <p>Kindly <strong>Login / Signup</strong> to place the order.</p>
+                        <button className="close-btn" onClick={() => setIsModalOpen(false)}>Close</button>
                 </Modal>
             </div>
 

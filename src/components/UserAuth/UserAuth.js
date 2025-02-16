@@ -1,18 +1,18 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import { UserAuthContext } from '../../store/user-auth-context';
 import { useNavigate } from 'react-router-dom';
 
-const UserAuth = ({setIsAuthenticated,
-    setUserName,
-    setUserPassword,
-    buttonName}) => {
+const UserAuth = () => {
+    const userAuthContext = useContext(UserAuthContext);
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const handleSubmit = (e) => {
         e.preventDefault();
         if (username?.trim()) {
-            setIsAuthenticated(true);
-            setUserName(username);
+            userAuthContext.setIsAuthenticated(true);
+            userAuthContext.setUsername(username);
+            userAuthContext.setUserpassword(password);
             navigate('/')
             
         } else {
@@ -22,7 +22,7 @@ const UserAuth = ({setIsAuthenticated,
     return (
         <div style={styles.container}>
             <form onSubmit={handleSubmit} style={styles.form}>
-                <h2 style={styles.heading}>{buttonName}</h2>
+                <h2 style={styles.heading}>Login</h2>
                 <div style={styles.inputGroup}>
                     <label style={styles.label}>Enter Username:</label>
                     <input 
@@ -43,7 +43,8 @@ const UserAuth = ({setIsAuthenticated,
                         required
                     />
                 </div>
-                <button type="submit" style={styles.button}>{buttonName}</button>
+                <button type="submit" style={styles.button}>Login</button>
+                <button type="submit" style={styles.button}>Sign Up</button>
             </form>
         </div>
     )
@@ -98,6 +99,7 @@ const styles = {
         borderRadius: "4px",
         cursor: "pointer",
         transition: "background 0.3s",
+        marginBottom: "10px",
     },
     buttonHover: {
         backgroundColor: "#0056b3",
