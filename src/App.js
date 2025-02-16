@@ -36,6 +36,7 @@ function App() {
   }
   const cartContextVal = {
     cart,
+    setCart,
     onAdd: addProductToCart,
     onUpdate: updateProductInCart,
   }

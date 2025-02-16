@@ -6,7 +6,7 @@ import { UserAuthContext } from '../../store/user-auth-context';
 
 const NavBar = () => {
     const { isAuthenticated, setIsAuthenticated, username } = useContext(UserAuthContext);
-    const { cart } = useContext(CartContext);
+    const { cart, setCart } = useContext(CartContext);
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const total = cart.reduce((total, item) => total + item.quantity, 0);
@@ -16,7 +16,8 @@ const NavBar = () => {
     const onLogout = () => {
         setDropdownOpen(false);
         setIsAuthenticated(false);
-        navigate('/login');
+        setCart([]);
+        setTimeout(() => {navigate('/login')},500);
     }
 
     return (
