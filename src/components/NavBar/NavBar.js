@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import './NavBar.css';
 import { CartContext } from '../../store/cart-context';
 import { UserAuthContext } from '../../store/user-auth-context';
+import { ThemeContext } from '../../store/theme-context';
 
 const NavBar = () => {
     const { isAuthenticated, setIsAuthenticated, username } = useContext(UserAuthContext);
     const { cart, setCart } = useContext(CartContext);
+    const {theme, setTheme} = useContext(ThemeContext);
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const total = cart.reduce((total, item) => total + item.quantity, 0);
@@ -18,6 +20,12 @@ const NavBar = () => {
         setIsAuthenticated(false);
         setCart([]);
         setTimeout(() => {navigate('/login')},500);
+    }
+
+    const handleTheme = () => {
+        setTheme((prevTheme) => {
+            return theme === 'light' ? 'dark' : 'light';
+        })
     }
 
     return (
@@ -40,7 +48,7 @@ const NavBar = () => {
                     {dropdownOpen && (
                         <div className="dropdown-menu">
                             <button>profile</button>
-                            <button>set theme</button>
+                            <button onClick={handleTheme}>switch to {theme === 'light' ? 'dark' : 'light'} mode</button>
                             <button onClick={onLogout}>logout</button>
                         </div>
                     )}

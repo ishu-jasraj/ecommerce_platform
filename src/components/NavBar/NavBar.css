@@ -87,7 +87,7 @@ nav button:active {
     color: black;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
-    width: 150px;
+    width: 200px;
     display: flex;
     flex-direction: column;
     z-index: 100;

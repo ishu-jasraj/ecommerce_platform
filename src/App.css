@@ -1,0 +1,36 @@
+/* Light Mode (Default) */
+body[data-theme="light"] {
+    --bg-color: white;
+    --text-color: black;
+    --button-bg: #007bff;
+    --button-text: white;
+}
+
+/* Dark Mode */
+body[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: white;
+    --button-bg: #61dafb;
+    --button-text: black;
+}
+
+/* Apply Theme Variables */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Buttons */
+button {
+    background: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    opacity: 0.8;
+}

@@ -7,6 +7,7 @@ import Cart from './components/Cart/Cart';
 import { CartContext } from './store/cart-context';
 import { UserAuthContext } from './store/user-auth-context';
 import UserAuth from './components/UserAuth/UserAuth';
+import { ThemeProvider } from './store/theme-context';
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -51,6 +52,7 @@ function App() {
   }
 
   return (
+    <ThemeProvider>
     <UserAuthContext.Provider value={userAuth}>
     <CartContext.Provider value = {cartContextVal}>
     <Router>
@@ -63,6 +65,7 @@ function App() {
     </Router>
     </CartContext.Provider>
     </UserAuthContext.Provider>
+    </ThemeProvider>
   );
 }
 
