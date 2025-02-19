@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useMemo, useState} from "react";
 import "./ProductList.css";
 import { DUMMY_PRODUCTS } from "../../assets/dummy_products";
 import { CartContext } from "../../store/cart-context";
@@ -14,12 +14,14 @@ const ProductList = () => {
         if(val !== query){
             setQuery(val);
         }
-        setDummyProducts(() => DUMMY_PRODUCTS.filter((item)=>{
-            const itemName = item.name.toLowerCase();
-            return itemName.includes(val);
-        }))
-        console.log('actual list---',DUMMY_PRODUCTS)
     };
+
+    const filteredProducts = useMemo(() => {
+        return dummyProducts.filter((item) => {
+            const itemName = item.name.toLowerCase();
+            return itemName.includes(query.toLowerCase());
+        });
+    }, [query, dummyProducts]);
 
     const onAddProduct = () => {
         const product = { id: DUMMY_PRODUCTS.length+1, 
@@ -29,6 +31,7 @@ const ProductList = () => {
                           img: "https://via.placeholder.com/60" 
                         };
         DUMMY_PRODUCTS.push(product);
+        setDummyProducts(()=>[...DUMMY_PRODUCTS]);
         handleInputChange(query);
     }
     return (
@@ -47,7 +50,7 @@ const ProductList = () => {
             <div className="container">
                 <h2>Product List</h2>
                 <ul>
-                    {dummyProducts.length > 0 && dummyProducts.map((product) => (
+                    {filteredProducts.length > 0 && filteredProducts.map((product) => (
                         <li key={product.id}>
                             <div className="product-item">
                                 <img src={product.img} alt={product.name} className="product-img" />
