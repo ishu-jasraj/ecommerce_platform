@@ -9,7 +9,7 @@ body[data-theme="light"] {
 /* Dark Mode */
 body[data-theme="dark"] {
     --bg-color: #121212;
-    --text-color: white;
+    --text-color: black;
     --button-bg: #61dafb;
     --button-text: black;
 }

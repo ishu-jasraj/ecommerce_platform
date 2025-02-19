@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './NavBar.css';
 import { CartContext } from '../../store/cart-context';
@@ -11,7 +11,7 @@ const NavBar = () => {
     const {theme, setTheme} = useContext(ThemeContext);
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    const total = cart.reduce((total, item) => total + item.quantity, 0);
+    const total = useMemo(()=>cart.reduce((total, item) => total + item.quantity, 0),[cart]);
 
     const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ const NavBar = () => {
 
     const handleTheme = () => {
         setTheme((prevTheme) => {
-            return theme === 'light' ? 'dark' : 'light';
+            return prevTheme === 'light' ? 'dark' : 'light';
         })
     }
 

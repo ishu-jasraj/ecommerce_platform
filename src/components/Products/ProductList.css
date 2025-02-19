@@ -127,3 +127,34 @@ button {
     text-decoration: line-through;
     margin-right: 10px;
 }
+
+/* Search Box Container */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0px;
+}
+
+/* Search Input Field */
+.search-container input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* Search Input Focus Effect */
+.search-container input:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 91, 187, 0.3);
+}
+
+/* Placeholder Text Styling */
+.search-container input::placeholder {
+    color: #888;
+    font-size: 14px;
+}
