@@ -2,15 +2,28 @@ import React, {useContext, useMemo, useState} from "react";
 import "./ProductList.css";
 import { DUMMY_PRODUCTS } from "../../assets/dummy_products";
 import { CartContext } from "../../store/cart-context";
+import Modal from 'react-modal';
 
 const ProductList = () => {
     const [dummyProducts, setDummyProducts] = useState(DUMMY_PRODUCTS);
     const [query, setQuery] = useState("");
+    const [addProduct, setAddProduct] = useState(false);
+    const [newProduct, setNewProduct] = useState({
+        name:"",
+        originalPrice: "",
+        discountedPrice:"",
+    });
+
+    const fields = [
+        { name: "name", label:"Product Name", type: "text", placeholder: "Enter product name..." },
+        { name: "originalPrice", label:"Original Price", type: "number", placeholder: "Enter original price..." },
+        { name: "discountedPrice", label:"Discounted Price", type: "number", placeholder: "Enter discounted price..." }
+    ];
+
     const { onAdd } = useContext(CartContext);
 
     const handleInputChange = (searchQuery) => {
         let val = searchQuery.trim();
-        console.log(val)
         if(val !== query){
             setQuery(val);
         }
@@ -23,16 +36,42 @@ const ProductList = () => {
         });
     }, [query, dummyProducts]);
 
-    const onAddProduct = () => {
-        const product = { id: DUMMY_PRODUCTS.length+1, 
-                          name: `Smart time clock ${DUMMY_PRODUCTS.length}`, 
-                          originalPrice: 500, 
-                          price: 300, 
-                          img: "https://via.placeholder.com/60" 
-                        };
-        DUMMY_PRODUCTS.push(product);
-        setDummyProducts(()=>[...DUMMY_PRODUCTS]);
-        handleInputChange(query);
+    const handleProductDataChange = (e) => {
+        const { name, value } = e.target;
+        setNewProduct((prevState)=>({
+            ...prevState,
+            [name]:value
+        }))
+
+    }
+
+    const handleFormButton = () => {
+        setAddProduct(false);
+        setNewProduct({
+                        name:"",
+                        originalPrice: "",
+                        discountedPrice:"",
+                      });
+    }
+
+    const handleAddProduct = (e) => {
+        e.preventDefault();
+        const {name, originalPrice, discountedPrice} = newProduct;
+        const productExists = DUMMY_PRODUCTS.find((product) => product.name.trim().toLowerCase() === name.trim().toLowerCase()); 
+        if(!productExists){
+                const product = { id: DUMMY_PRODUCTS.length+1, 
+                                name, 
+                                originalPrice, 
+                                price: discountedPrice, 
+                                img: "https://via.placeholder.com/60" 
+                                };
+                DUMMY_PRODUCTS.push(product);
+                setDummyProducts(()=>[...DUMMY_PRODUCTS]);
+                setTimeout(()=>handleFormButton(),500);
+                handleInputChange(query);
+        }else{
+                alert('Product with this name already exists. Please add different product.')
+        }
     }
     return (
         <>
@@ -44,7 +83,7 @@ const ProductList = () => {
                 />
                 <button 
                 style={{marginLeft:"10px"}} 
-                onClick={onAddProduct}
+                onClick={()=>{setAddProduct(true)}}
                 >Add Product </button>
             </div>
             <div className="container">
@@ -72,6 +111,31 @@ const ProductList = () => {
                 </ul>
                 {dummyProducts.length === 0 && <p>Product List is empty!!</p>}
             </div>
+            <Modal
+                isOpen={addProduct}
+                onRequestClose={() => setAddProduct(false)}
+                className="ReactModal__Content" 
+                overlayClassName="ReactModal__Overlay" 
+            >
+                <form onSubmit={handleAddProduct}>
+                    <h2>Add Product Details</h2>
+                    {fields.map((field) => (
+                        <div key={field.name}>
+                            <label>{field.label}: </label>
+                            <input 
+                                type={field.type} 
+                                name={field.name}
+                                value={newProduct[field.name]} 
+                                onChange={handleProductDataChange}
+                                placeholder={field.placeholder}
+                                required
+                            />
+                        </div>
+                    ))}
+                    <button>Add Product</button>
+                    <button className="close-btn" onClick={()=>handleFormButton()}>Close</button>
+                </form>
+            </Modal>
         </>
     );
 };

@@ -79,6 +79,7 @@ button {
     cursor: pointer;
     font-size: 14px;
     transition: background 0.3s ease, transform 0.2s ease;
+    min-width: 100px;
 }
 
 /* "Add to Cart" button */
@@ -157,4 +158,84 @@ button {
 .search-container input::placeholder {
     color: #888;
     font-size: 14px;
+}
+
+/* Modal Styling */
+.ReactModal__Overlay {
+    background-color: rgba(0, 0, 0, 0.5);  /* Semi-transparent dark background */
+    z-index: 1000;  /* Ensure modal is on top */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;  /* Ensures it stays fixed in place */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.ReactModal__Content {
+    position: relative;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Header styling */
+h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Style the form inputs */
+form{
+    margin-left:40px;
+}
+form div {
+    margin-bottom: 15px;
+}
+
+form div label{
+    font-size: 18px;
+}
+
+input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 12px 8px;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top:4px;
+}
+
+/* Button styling inside modal */
+form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+.close-btn {
+    background-color: red;
+    color: white;
+    margin-left: 10px;
+}
+
+.close-btn:hover {
+    background-color: darkred;
 }
