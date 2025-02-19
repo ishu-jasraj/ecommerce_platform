@@ -11,15 +11,23 @@ const ProductList = () => {
     const handleInputChange = (searchQuery) => {
         let val = searchQuery.trim();
         console.log(val)
-        setQuery(val);
+        if(val !== query){
+            setQuery(val);
+        }
         setDummyProducts(() => DUMMY_PRODUCTS.filter((item)=>{
             const itemName = item.name.toLowerCase();
             return itemName.includes(val);
         }))
+        console.log('actual list---',DUMMY_PRODUCTS)
     };
 
     const onAddProduct = () => {
-        const product = { id: DUMMY_PRODUCTS.length, name: "Smart time clock", originalPrice: 500, price: 300, img: "https://via.placeholder.com/60" };
+        const product = { id: DUMMY_PRODUCTS.length+1, 
+                          name: `Smart time clock ${DUMMY_PRODUCTS.length}`, 
+                          originalPrice: 500, 
+                          price: 300, 
+                          img: "https://via.placeholder.com/60" 
+                        };
         DUMMY_PRODUCTS.push(product);
         handleInputChange(query);
     }
