@@ -14,6 +14,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const addProductToCart = (productDetail) => {
        const {id, name, price} = productDetail;
@@ -49,6 +50,8 @@ function App() {
     setUsername: setUserName,
     setUserpassword: setUserPassword,
     setIsAuthenticated,
+    isAdmin,
+    setIsAdmin,
   }
 
   return (

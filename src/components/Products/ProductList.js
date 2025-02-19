@@ -2,6 +2,7 @@ import React, {useContext, useMemo, useState} from "react";
 import "./ProductList.css";
 import { DUMMY_PRODUCTS } from "../../assets/dummy_products";
 import { CartContext } from "../../store/cart-context";
+import { UserAuthContext } from "../../store/user-auth-context";
 import Modal from 'react-modal';
 
 const ProductList = () => {
@@ -21,6 +22,7 @@ const ProductList = () => {
     ];
 
     const { onAdd } = useContext(CartContext);
+    const {isAdmin} = useContext(UserAuthContext);
 
     const handleInputChange = (searchQuery) => {
         let val = searchQuery.trim();
@@ -81,10 +83,10 @@ const ProductList = () => {
                     placeholder="Search Product..."
                     onChange={(e) => handleInputChange(e.target.value)}
                 />
-                <button 
+                {isAdmin && <button 
                 style={{marginLeft:"10px"}} 
                 onClick={()=>{setAddProduct(true)}}
-                >Add Product </button>
+                >Add Product </button>}
             </div>
             <div className="container">
                 <h2>Product List</h2>

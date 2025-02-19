@@ -10,6 +10,9 @@ const UserAuth = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (username?.trim()) {
+            if(username.trim().toLowerCase() === 'admin' && password === 'admin'){
+                userAuthContext.setIsAdmin(true);
+            }
             userAuthContext.setIsAuthenticated(true);
             userAuthContext.setUsername(username);
             userAuthContext.setUserpassword(password);
