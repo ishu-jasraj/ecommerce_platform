@@ -5,6 +5,8 @@ export const UserAuthContext = createContext({
     userpassword: '',
     isAdmin:false,
     isAuthenticated: false,
+    dropdownOpen: false,
+    setDropdownOpen: () => {},
     setUsername: () => {},
     setUserpassword: () => {},
     setIsAuthenticated: () => {},

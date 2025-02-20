@@ -1,5 +1,5 @@
-import {useState} from 'react';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import {useEffect, useState, useRef} from 'react';
+import {BrowserRouter as Router, Routes, Route, useNavigate} from 'react-router-dom';
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
 import ProductList from './components/Products/ProductList';
@@ -15,6 +15,8 @@ function App() {
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const timeoutRef = useRef(null);
 
   const addProductToCart = (productDetail) => {
        const {id, name, price} = productDetail;
@@ -47,12 +49,42 @@ function App() {
     username: userName,
     userpassword: userPassword,
     isAuthenticated,
+    dropdownOpen,
     setUsername: setUserName,
     setUserpassword: setUserPassword,
     setIsAuthenticated,
     isAdmin,
     setIsAdmin,
+    setDropdownOpen,
   }
+
+  //when user logs in , start the timer
+  const resetTimer = () => {
+    if(timeoutRef.current){
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+        setDropdownOpen(false);
+        setIsAuthenticated(false);
+        setIsAdmin(false);
+        setCart([]);
+    },15000);
+  }
+
+  useEffect(()=>{
+    if(isAuthenticated){
+      resetTimer();
+
+      const events = ["mousemove", "keydown", "scroll", "click"];
+      events.forEach(event => window.addEventListener(event, resetTimer));
+    }
+
+    return () => {
+      clearTimeout(timeoutRef.current);
+      const events = ["mousemove", "keydown", "scroll", "click"];
+      events.forEach(event => window.removeEventListener(event, resetTimer));
+    }
+  },[isAuthenticated]);
 
   return (
     <ThemeProvider>

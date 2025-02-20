@@ -1,4 +1,4 @@
-import React, { useContext, useState, useMemo } from 'react';
+import React, { useContext, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './NavBar.css';
 import { CartContext } from '../../store/cart-context';
@@ -6,21 +6,26 @@ import { UserAuthContext } from '../../store/user-auth-context';
 import { ThemeContext } from '../../store/theme-context';
 
 const NavBar = () => {
-    const { isAuthenticated, setIsAuthenticated, username, setIsAdmin } = useContext(UserAuthContext);
+    const { isAuthenticated, setIsAuthenticated, setIsAdmin, username, dropdownOpen, setDropdownOpen } = useContext(UserAuthContext);
     const { cart, setCart } = useContext(CartContext);
     const {theme, setTheme} = useContext(ThemeContext);
-    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const total = useMemo(()=>cart.reduce((total, item) => total + item.quantity, 0),[cart]);
 
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        if(!isAuthenticated){
+            navigate('/login');
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[isAuthenticated]);
 
     const onLogout = () => {
         setDropdownOpen(false);
         setIsAuthenticated(false);
         setIsAdmin(false);
         setCart([]);
-        setTimeout(() => {navigate('/login')},500);
     }
 
     const handleTheme = () => {
