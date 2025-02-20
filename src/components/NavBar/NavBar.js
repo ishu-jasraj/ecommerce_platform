@@ -6,7 +6,7 @@ import { UserAuthContext } from '../../store/user-auth-context';
 import { ThemeContext } from '../../store/theme-context';
 
 const NavBar = () => {
-    const { isAuthenticated, setIsAuthenticated, username } = useContext(UserAuthContext);
+    const { isAuthenticated, setIsAuthenticated, username, setIsAdmin } = useContext(UserAuthContext);
     const { cart, setCart } = useContext(CartContext);
     const {theme, setTheme} = useContext(ThemeContext);
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -18,6 +18,7 @@ const NavBar = () => {
     const onLogout = () => {
         setDropdownOpen(false);
         setIsAuthenticated(false);
+        setIsAdmin(false);
         setCart([]);
         setTimeout(() => {navigate('/login')},500);
     }
