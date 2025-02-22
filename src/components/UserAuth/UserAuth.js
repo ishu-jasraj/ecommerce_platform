@@ -1,37 +1,67 @@
 import React, {useState, useContext} from 'react';
 import { UserAuthContext } from '../../store/user-auth-context';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+console.log('base----',process.env.REACT_APP_BASE_URL)
+console.log('base----',process.env.REACT_APP_LOGIN)
 
 const UserAuth = () => {
     const userAuthContext = useContext(UserAuthContext);
     const navigate = useNavigate();
-    const [username, setUsername] = useState("");
+    const [useremail, setUseremail] = useState("");
     const [password, setPassword] = useState("");
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        if (username?.trim()) {
-            if(username.trim().toLowerCase() === 'admin' && password === 'admin'){
+        try{
+            const loginUrl = process.env.REACT_APP_LOGIN;
+            console.log(`${process.env.REACT_APP_BASE_URL}${loginUrl}`)
+            const response = await axios.post(`${process.env.REACT_APP_BASE_URL}${loginUrl}`,{
+                email:useremail,
+                password:password
+            });
+            console.log(response)
+            if(response.data.success){
+                const token  = response?.data?.user?.token;
+                if(!token){
+                    alert('Invalid response from server. Please try again.');
+                    return;
+                }
+                localStorage.setItem('token',token);
+
+                const {name} = response.data.user;
+                if(name === 'admin'){
                 userAuthContext.setIsAdmin(true);
+                }
+                userAuthContext.setIsAuthenticated(true);
+                userAuthContext.setUsername(name);
+                userAuthContext.setUserpassword(password);
+                navigate('/')
+
             }
-            userAuthContext.setIsAuthenticated(true);
-            userAuthContext.setUsername(username);
-            userAuthContext.setUserpassword(password);
-            navigate('/')
-            
-        } else {
-            alert("Please enter a username.");
+        }catch(err){
+            if(err.response){
+                alert('Invalid Credentials');
+                console.log(err.response?.data?.msg || 'Invalid credentials');
+            }else if(err.request){
+                console.log('Network error')
+            }else{
+                console.log('Error: ',err);
+            }
         }
     }
+
     return (
         <div style={styles.container}>
             <form onSubmit={handleSubmit} style={styles.form}>
                 <h2 style={styles.heading}>Login</h2>
                 <div style={styles.inputGroup}>
-                    <label style={styles.label}>Enter Username:</label>
+                    <label style={styles.label}>Enter Email:</label>
                     <input 
                         type="text" 
-                        value={username} 
-                        onChange={(e) => setUsername(e.target.value)} 
+                        value={useremail} 
+                        onChange={(e) => setUseremail(e.target.value)} 
                         style={styles.input}
                         required
                     />
