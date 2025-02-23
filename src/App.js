@@ -8,6 +8,8 @@ import { CartContext } from './store/cart-context';
 import { UserAuthContext } from './store/user-auth-context';
 import UserAuth from './components/UserAuth/UserAuth';
 import { ThemeProvider } from './store/theme-context';
+import axios from 'axios';
+import { ProductListContext } from './store/product-list-context';
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -16,7 +18,23 @@ function App() {
   const [userPassword, setUserPassword] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [productList, setProductList] = useState([]);
   const timeoutRef = useRef(null);
+
+  useEffect(()=>{
+    const fetchProductList = async() => {
+      try{
+        const productListUrl = process.env.REACT_APP_PRODUCT_LIST_URL;
+        const response = await axios.get(productListUrl);
+        const productList = response?.data?.data || [];
+        setProductList(productList);
+        console.log('productList---', productList)
+      }catch(err){
+        console.log("Error while fetching product list: ",err);
+      }
+    }
+    fetchProductList();
+  },[]);
 
   const addProductToCart = (productDetail) => {
        const {id, name, price} = productDetail;
@@ -86,7 +104,13 @@ function App() {
     }
   },[isAuthenticated]);
 
+  const prodList = {
+    productList,
+    setProductList,
+  }
+
   return (
+    <ProductListContext.Provider value={prodList}>
     <ThemeProvider>
     <UserAuthContext.Provider value={userAuth}>
     <CartContext.Provider value = {cartContextVal}>
@@ -101,6 +125,7 @@ function App() {
     </CartContext.Provider>
     </UserAuthContext.Provider>
     </ThemeProvider>
+    </ProductListContext.Provider>
   );
 }
 

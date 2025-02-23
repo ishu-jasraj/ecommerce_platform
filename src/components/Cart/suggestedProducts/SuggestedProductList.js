@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
 import "./SuggestedProducts.css";
-import { DUMMY_PRODUCTS } from '../../../assets/dummy_products';
 import { CartContext } from '../../../store/cart-context';
-
+import { ProductListContext } from '../../../store/product-list-context';
 
 const SuggestedProductList = () => {
+    const {productList} = useContext(ProductListContext);
     const { cart, onAdd } = useContext(CartContext);
-    const suggestedProducts = DUMMY_PRODUCTS.filter(
+    const suggestedProducts = productList.filter(
         (product) => !cart.some((cartItem) => cartItem.id === product.id)
     );
 

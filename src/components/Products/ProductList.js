@@ -1,12 +1,13 @@
 import React, {useContext, useMemo, useState} from "react";
 import "./ProductList.css";
-import { DUMMY_PRODUCTS } from "../../assets/dummy_products";
 import { CartContext } from "../../store/cart-context";
 import { UserAuthContext } from "../../store/user-auth-context";
 import Modal from 'react-modal';
+import { ProductListContext } from "../../store/product-list-context";
 
 const ProductList = () => {
-    const [dummyProducts, setDummyProducts] = useState(DUMMY_PRODUCTS);
+    const {productList, setProductList} = useContext(ProductListContext);
+    const [dummyProducts, setDummyProducts] = useState(productList);
     const [query, setQuery] = useState("");
     const [addProduct, setAddProduct] = useState(false);
     const [newProduct, setNewProduct] = useState({
@@ -59,16 +60,16 @@ const ProductList = () => {
     const handleAddProduct = (e) => {
         e.preventDefault();
         const {name, originalPrice, discountedPrice} = newProduct;
-        const productExists = DUMMY_PRODUCTS.find((product) => product.name.trim().toLowerCase() === name.trim().toLowerCase()); 
+        const productExists = productList.find((product) => product.name.trim().toLowerCase() === name.trim().toLowerCase()); 
         if(!productExists){
-                const product = { id: DUMMY_PRODUCTS.length+1, 
+                const product = { id: productList.length+1, 
                                 name, 
                                 originalPrice, 
                                 price: discountedPrice, 
                                 img: "https://via.placeholder.com/60" 
                                 };
-                DUMMY_PRODUCTS.push(product);
-                setDummyProducts(()=>[...DUMMY_PRODUCTS]);
+                setProductList((prev)=>[...prev,product]);
+                setDummyProducts(()=>[...productList]);
                 setTimeout(()=>handleFormButton(),500);
                 handleInputChange(query);
         }else{
